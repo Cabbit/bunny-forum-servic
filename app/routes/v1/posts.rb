@@ -10,13 +10,14 @@ module Routes
         error!({ error: 'Post not found.' }, 404, 'Content-Type' => 'text/error')
       end
 
+      helpers do
+      end
+
       resource :posts do
         desc ''
         get do
-          cache_control :public, max_age: 15
-
           posts = Post.all
-          serialize(posts, is_collection: true)
+          stream serialize_as_stream(posts)
         end
 
         desc ''

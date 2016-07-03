@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'grape/json_api/streamer'
+
 module Routes
   module V1
     class API < Grape::API
@@ -11,6 +13,10 @@ module Routes
       helpers do
         def serialize(model, options = {})
           JSONAPI::Serializer.serialize(model, options)
+        end
+
+        def serialize_as_stream(collection)
+          Grape::JSONAPI::Streamer.new(collection)
         end
 
         def normalized_locale

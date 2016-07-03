@@ -21,6 +21,7 @@ gem 'paperclip-rack', require: 'paperclip/rack'
 gem 'aws-sdk', '< 2.0'
 gem 'mocha'
 gem 'minitest-spec-context'
+gem 'grape_json_api_streamer', '>= 0.0.3'
 
 group :development do
   gem 'pry'
