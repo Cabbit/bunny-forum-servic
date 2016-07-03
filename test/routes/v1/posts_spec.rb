@@ -44,4 +44,19 @@ class ApiV1PostsTest < ApiV1TestCase
       end
     end
   end
+
+  describe 'PUT /posts/:id' do
+    before do
+      Post.expects(:find).with('1').returns(post)
+      post.expects(:update).with('title' => 'B')
+      post.expects(:save)
+    end
+
+    it 'should update post 1' do
+      put '/api/posts/1', { post: { title: 'B' } }
+
+      assert_equal 1, json_response.size
+      assert_equal 202, status_code
+    end
+  end
 end
