@@ -2,11 +2,11 @@
 require_relative '../../test_helper'
 
 class ApiV1PostsTest < ApiV1TestCase
-  let(:post) { Post.new }
+  let(:post_one) { Post.new }
 
   describe 'GET /posts' do
     before do
-      Post.expects(:all).returns([post])
+      Post.expects(:all).returns([post_one])
     end
 
     it 'should return 1 post' do
@@ -17,10 +17,23 @@ class ApiV1PostsTest < ApiV1TestCase
     end
   end
 
+  describe 'POST /posts' do
+    before do
+      Post.expects(:create).with('title' => 'B').returns(post_one)
+    end
+
+    it 'should create post 1' do
+      post '/api/posts', post: { title: 'B' }
+
+      assert_equal 1, json_response.size
+      assert_equal 201, status_code
+    end
+  end
+
   describe 'GET /posts/:id' do
     context 'when post exists' do
       before do
-        Post.expects(:find).with('1').returns(post)
+        Post.expects(:find).with('1').returns(post_one)
       end
 
       it 'should return 1 post' do
@@ -47,9 +60,9 @@ class ApiV1PostsTest < ApiV1TestCase
 
   describe 'PUT /posts/:id' do
     before do
-      Post.expects(:find).with('1').returns(post)
-      post.expects(:update).with('title' => 'B')
-      post.expects(:save)
+      Post.expects(:find).with('1').returns(post_one)
+      post_one.expects(:update).with('title' => 'B')
+      post_one.expects(:save)
     end
 
     it 'should update post 1' do

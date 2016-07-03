@@ -19,6 +19,19 @@ module Routes
           serialize(posts, is_collection: true)
         end
 
+        desc ''
+        params do
+          requires :post, type: Hash do
+            requires :title, type: String, desc: 'Title'
+          end
+        end
+        post do
+          post = Post.create(permitted_params[:post])
+
+          status 201
+          serialize(post, is_collection: false)
+        end
+
         route_param :id do
           desc ''
           get do
