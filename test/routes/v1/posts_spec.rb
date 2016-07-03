@@ -66,7 +66,7 @@ class ApiV1PostsTest < ApiV1TestCase
     end
 
     it 'should update post 1' do
-      put '/api/posts/1', post: { title: 'B' }
+      patch '/api/posts/1', post: { title: 'B' }
 
       assert_equal 1, json_response.size
       assert_equal 202, status_code

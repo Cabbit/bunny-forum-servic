@@ -30,5 +30,5 @@ Install docker for mac https://docs.docker.com/engine/installation/mac/ then run
 ### GET /api/posts/:id
 ```curl localhost:5000/api/posts/1```
 
-### PUT /api/posts/:id
-```curl -X PUT -d 'post[title]'='New Post Title' localhost:5000/api/posts/1```
+### PATCH /api/posts/:id
+```curl -X PATCH -d 'post[title]'='New Post Title' localhost:5000/api/posts/1```

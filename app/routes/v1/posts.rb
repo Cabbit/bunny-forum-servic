@@ -47,7 +47,7 @@ module Routes
               requires :title, type: String, desc: 'Title'
             end
           end
-          put do
+          patch do
             post = Post.find(params[:id])
             post.update(permitted_params[:post])
             post.save
