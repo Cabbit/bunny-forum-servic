@@ -6,6 +6,7 @@ module Routes
       format :json
       default_format :json
       prefix 'api'
+      helpers ParamsHelper
 
       helpers do
         def serialize(model, options = {})

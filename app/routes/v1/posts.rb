@@ -10,12 +10,6 @@ module Routes
         error!({ error: 'Post not found.' }, 404, 'Content-Type' => 'text/error')
       end
 
-      helpers do
-        def permitted_params
-          @permitted_params ||= declared(params, include_missing: false, include_parent_namespaces: false)
-        end
-      end
-
       resource :posts do
         desc ''
         get do

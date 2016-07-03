@@ -10,6 +10,7 @@ ActiveRecord::Base.raise_in_transactional_callbacks = true
 [
   %w(app models ** *.rb),
   %w(app serializers ** *.rb),
+  %w(app helpers ** *.rb),
   %w(app routes v* *.rb),
   %w(app routes ** *.rb)
 ].each do |pattern|

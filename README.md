@@ -9,6 +9,10 @@ Install docker for mac https://docs.docker.com/engine/installation/mac/ then run
 ## Running Specs
 ```docker-compose run rake test```
 
+## Before committing changes
+```docker-compose run rake test``` Must pass
+```docker-compose run rake rubocop``` Must pass
+
 ## Seeding the test database
 ```docker-compose run rake db:seed```
 
