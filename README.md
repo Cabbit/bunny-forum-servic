@@ -1,19 +1,27 @@
 # Bunny Forum Service
 
-## Setup
-* gem install foreman
+## Setup(Mac OS)
+Install docker for mac https://docs.docker.com/engine/installation/mac/ then run the following commands
+* ```docker-compose build```
+* ```docker-compose run app rake db:create```
+* ```docker-compose run app rake db:migrate```
 
-## Test setup
-* bundle install
-* db:test:prepare
-* rake test
+## Running Specs
+```docker-compose run rake test```
 
-## Running
-* foreman start
+## Seeding the test database
+```docker-compose run rake db:seed```
 
-## Architecture
+## Running the application
+```docker-compose up```
 
-- Categories
--- Forums
---- Topics
----- Posts
+## Endpoints
+
+### GET /api/posts
+```curl localhost:5000/api/posts```
+
+### GET /api/posts/:id
+```curl localhost:5000/api/posts/1```
+
+### PUT /api/posts/:id
+```curl -X PUT -d 'post[title]'='New Post Title' localhost:5000/api/posts/1```
