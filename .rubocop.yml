@@ -1,0 +1,13 @@
+inherit_from: .hound.yml
+
+Documentation:
+  Enabled: false
+NumericLiterals:
+  MinDigits: 10
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'test/fixtures/**/*'
+    - 'tmp/**/*'
+    - 'db/**/*'
+  TargetRubyVersion: 2.3
