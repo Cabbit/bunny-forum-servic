@@ -32,30 +32,13 @@
     <script src="http://underscorejs.org/underscore-min.js"></script>
     <script src="http://backbonejs.org/backbone-min.js"></script>
     <script>
-    window.objects = [];
-
-    function draw(model) {
-      row = '<tr>';
-      row += '<td>' + model.id + '</td>';
-      row += '<td>' + model.attributes.title + '</td>';
-      row += '</tr>';
-      $('#nodes').prepend(row);
-    };
-
-    function drawObjects() {
-      if (window.objects.length > 0) {
-        draw(window.objects[0]);
-        window.objects.shift();
-      }
-      setTimeout(drawObjects, 1);
-    };
-
-    var drawer = drawObjects();
-
     oboe('http://localhost:5000/api/posts')
       .node('{type}', function(object) {
-        console.log(object);
-        window.objects.push(object)
+        row = '<tr>';
+        row += '<td>' + object.id + '</td>';
+        row += '<td>' + object.attributes.title + '</td>';
+        row += '</tr>';
+        $('#nodes').prepend(row);
         return oboe.drop;
       })
       .done(function(things) {
