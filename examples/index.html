@@ -1,69 +1,69 @@
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Cabbit Streaming Client</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Cabbit Streaming Client</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    </head>
-    <body>
-        <div class="container">
-            <div class="page-header">
-                <h1>Cabbit Streaming Client</h1>
-                <p class="lead">Super fast JSON.</p>
-            </div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                    </tr>
-                </thead>
-                <tbody id="nodes"></tbody>
-            </table>
-        </div>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <h1>Cabbit Streaming Client</h1>
+        <p class="lead">Super fast JSON.</p>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+          </tr>
+        </thead>
+        <tbody id="nodes"></tbody>
+      </table>
+    </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://raw.githubusercontent.com/jimhigson/oboe.js/v2.1.2/dist/oboe-browser.min.js"></script>
-        <script src="http://underscorejs.org/underscore-min.js"></script>
-        <script src="http://backbonejs.org/backbone-min.js"></script>
-        <script>
-        window.objects = [];
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://raw.githubusercontent.com/jimhigson/oboe.js/v2.1.2/dist/oboe-browser.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="http://backbonejs.org/backbone-min.js"></script>
+    <script>
+    window.objects = [];
 
-        function draw(model) {
-            row = '<tr>';
-            row += '<td>' + model.id + '</td>';
-            row += '<td>' + model.attributes.title + '</td>';
-            row += '</tr>';
-            $('#nodes').prepend(row);
-        };
+    function draw(model) {
+      row = '<tr>';
+      row += '<td>' + model.id + '</td>';
+      row += '<td>' + model.attributes.title + '</td>';
+      row += '</tr>';
+      $('#nodes').prepend(row);
+    };
 
-        function drawObjects() {
-            if (window.objects.length > 0) {
-                draw(window.objects[0]);
-                window.objects.shift();
-            }
-            setTimeout(drawObjects, 1);
-        };
+    function drawObjects() {
+      if (window.objects.length > 0) {
+        draw(window.objects[0]);
+        window.objects.shift();
+      }
+      setTimeout(drawObjects, 1);
+    };
 
-        var drawer = drawObjects();
+    var drawer = drawObjects();
 
-        oboe('http://localhost:5000/api/posts')
-            .node('{type}', function(object) {
-              console.log(object);
-                window.objects.push(object)
-                return oboe.drop;
-            })
-            .done(function(things) {
-                console.log('done');
-            })
-            .fail(function(error) {
-                console.log('we failed', error);
-            });
-        </script>
-    </body>
+    oboe('http://localhost:5000/api/posts')
+      .node('{type}', function(object) {
+        console.log(object);
+        window.objects.push(object)
+        return oboe.drop;
+      })
+      .done(function(things) {
+        console.log('done');
+      })
+      .fail(function(error) {
+        console.log('we failed', error);
+      });
+    </script>
+  </body>
 </html>
