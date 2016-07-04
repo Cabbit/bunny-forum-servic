@@ -6,7 +6,7 @@ class ApiV1PostsTest < ApiV1TestCase
 
   describe 'GET /posts' do
     before do
-      Post.expects(:all).returns([post_one])
+      Post.expects(:find_each).returns([post_one])
     end
 
     it 'should return 1 post' do
