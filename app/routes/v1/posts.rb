@@ -16,7 +16,7 @@ module Routes
       resource :posts do
         desc ''
         get do
-          posts = Post.all
+          posts = Post.find_each
           stream serialize_as_stream(posts)
         end
 
