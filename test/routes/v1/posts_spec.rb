@@ -2,13 +2,7 @@
 require_relative '../../test_helper'
 
 class ApiV1PostsTest < ApiV1TestCase
-  let(:post_one) { Post.new }
-
   describe 'GET /posts' do
-    before do
-      Post.expects(:find_each).returns([post_one])
-    end
-
     it 'should return 1 post' do
       get '/api/posts'
 
@@ -18,24 +12,38 @@ class ApiV1PostsTest < ApiV1TestCase
   end
 
   describe 'POST /posts' do
-    before do
-      Post.expects(:create).with('title' => 'B').returns(post_one)
+    context 'when attributes valid' do
+      it 'should create post 1' do
+        post '/api/posts', post: { title: 'B' }
+
+        assert_equal 1, json_response.size
+        assert_equal 201, status_code
+      end
     end
 
-    it 'should create post 1' do
-      post '/api/posts', post: { title: 'B' }
+    context 'when attributes invalid' do
+      let(:error_message) do
+        {
+          errors: [
+            {
+              source: { pointer: '/data/attributes/title' },
+              detail: 'Title can\'t be blank'
+            }
+          ]
+        }
+      end
 
-      assert_equal 1, json_response.size
-      assert_equal 201, status_code
+      it 'should create post 1' do
+        post '/api/posts', post: { title: '' }
+
+        assert_equal error_message, json_response
+        assert_equal 422, status_code
+      end
     end
   end
 
   describe 'GET /posts/:id' do
     context 'when post exists' do
-      before do
-        Post.expects(:find).with('1').returns(post_one)
-      end
-
       it 'should return 1 post' do
         get '/api/posts/1'
 
@@ -45,31 +53,23 @@ class ApiV1PostsTest < ApiV1TestCase
     end
 
     context 'when post no found' do
-      before do
-        Post.expects(:find).with('1').raises(ActiveRecord::RecordNotFound)
-      end
-
       it 'should return error message 404 post not found' do
-        get '/api/posts/1'
+        get '/api/posts/1000'
 
-        assert_equal 'Post not found.', json_response[:error]
+        assert_equal 'Post not found.', json_response[:errors].first[:detail]
         assert_equal 404, status_code
       end
     end
   end
 
   describe 'PUT /posts/:id' do
-    before do
-      Post.expects(:find).with('1').returns(post_one)
-      post_one.expects(:update).with('title' => 'B')
-      post_one.expects(:save)
-    end
+    context 'when attributes valid' do
+      it 'should update post 1' do
+        patch '/api/posts/1', post: { title: 'B' }
 
-    it 'should update post 1' do
-      patch '/api/posts/1', post: { title: 'B' }
-
-      assert_equal 1, json_response.size
-      assert_equal 202, status_code
+        assert_equal 1, json_response.size
+        assert_equal 202, status_code
+      end
     end
   end
 end

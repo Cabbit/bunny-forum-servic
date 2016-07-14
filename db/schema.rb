@@ -11,12 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530194208) do
+ActiveRecord::Schema.define(version: 20160708210720) do
+
+  create_table "forums", force: :cascade do |t|
+    t.integer  "forum_id",       limit: 4
+    t.string   "title",          limit: 255,             null: false
+    t.string   "description",    limit: 255,             null: false
+    t.integer  "topics_count",   limit: 4,   default: 0, null: false
+    t.integer  "posts_count",    limit: 4,   default: 0, null: false
+    t.integer  "last_poster_id", limit: 4
+    t.date     "last_posted_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "forum_type",     limit: 255,             null: false
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string   "title",      limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.integer  "forum_id",       limit: 4,               null: false
+    t.string   "title",          limit: 255,             null: false
+    t.integer  "views_count",    limit: 4,   default: 0, null: false
+    t.integer  "replies_count",  limit: 4,   default: 0, null: false
+    t.integer  "last_poster_id", limit: 4
+    t.date     "last_posted_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
 end

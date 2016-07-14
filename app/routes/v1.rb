@@ -15,8 +15,12 @@ module Routes
           JSONAPI::Serializer.serialize(model, options)
         end
 
-        def serialize_as_stream(collection)
-          Grape::JSONAPI::Streamer.new(collection)
+        def serialize_as_stream(collection, options)
+          Grape::JSONAPI::Streamer.new(collection, options)
+        end
+
+        def serialize_errors(errors)
+          JSONAPI::Serializer.serialize_errors(errors)
         end
 
         def normalized_locale
@@ -38,6 +42,8 @@ module Routes
         I18n.locale = normalized_locale || default_locale
       end
 
+      mount Routes::V1::Forums
+      mount Routes::V1::Topics
       mount Routes::V1::Posts
     end
   end

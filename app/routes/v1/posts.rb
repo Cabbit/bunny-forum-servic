@@ -7,17 +7,42 @@ module Routes
       content_type :json, 'application/json;charset=UTF-8'
 
       rescue_from ActiveRecord::RecordNotFound do
-        error!({ error: 'Post not found.' }, 404, 'Content-Type' => 'text/error')
+        error!(serialize_errors([{detail: 'Post not found.'}]), 404, 'Content-Type' => 'text/error')
+      end
+
+      rescue_from ActiveRecord::RecordInvalid do |e|
+        error!(serialize_errors(e.record.errors), 422, 'Content-Type' => 'text/error')
       end
 
       helpers do
+        def post
+          @post ||= Post.find(params[:id])
+        end
       end
 
       resource :posts do
         desc ''
+        params do
+          optional :limit, type: Integer, desc: 'Limit result'
+          optional :offset, type: Integer, desc: 'Limit result', default: 0
+        end
         get do
-          posts = Post.find_each
-          stream serialize_as_stream(posts)
+          options = {}
+          if params[:limit]
+            meta  = { limit: params[:limit], offset: params[:offset], total: Post.count }
+            links = {
+              self:  "/api/posts?limit=#{params[:limit]}&offset=#{params[:offset]}",
+              first: "/api/posts?limit=#{params[:limit]}&offset=0",
+              prev:  "/api/posts?limit=#{params[:limit]}&offset=#{params[:offset] - params[:limit]}",
+              next:  "/api/posts?limit=#{params[:limit]}&offset=#{params[:offset] + params[:limit]}",
+              last:  "/api/posts?limit=#{params[:limit]}&offset=#{Post.count - params[:limit]}",
+            }
+            options = { meta: meta, links: links }
+            posts = Post.limit(params[:limit]).offset(params[:offset])
+          else
+            posts = Post.find_each
+          end
+          stream serialize_as_stream(posts, options)
         end
 
         desc ''
@@ -27,7 +52,7 @@ module Routes
           end
         end
         post do
-          post = Post.create(permitted_params[:post])
+          @post = Post.create!(permitted_params[:post])
 
           status 201
           serialize(post, is_collection: false)
@@ -36,9 +61,6 @@ module Routes
         route_param :id do
           desc ''
           get do
-            cache_control :public, max_age: 15
-
-            post = Post.find(params[:id])
             serialize(post, is_collection: false)
           end
 
@@ -49,9 +71,7 @@ module Routes
             end
           end
           patch do
-            post = Post.find(params[:id])
-            post.update(permitted_params[:post])
-            post.save
+            post.update!(permitted_params[:post])
 
             status 202
             serialize(post, is_collection: false)
