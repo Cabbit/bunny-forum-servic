@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20160708210720) do
     t.date     "last_posted_at"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.string   "forum_type",     limit: 255,             null: false
   end
 
   create_table "posts", force: :cascade do |t|

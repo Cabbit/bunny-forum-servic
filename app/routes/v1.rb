@@ -4,11 +4,20 @@ require 'grape/json_api/streamer'
 module Routes
   module V1
     class API < Grape::API
-      version 'v1'
+      version 'v1', using: :accept_version_header, vendor: 'cabbit'
+      content_type :json, 'application/json;charset=UTF-8'
       format :json
-      default_format :json
       prefix 'api'
+
       helpers ParamsHelper
+
+      rescue_from ActiveRecord::RecordNotFound do |e|
+        error!(serialize_errors([{detail: e.message}]), 404, 'Content-Type' => 'text/error')
+      end
+
+      rescue_from ActiveRecord::RecordInvalid do |e|
+        error!(serialize_errors(e.record.errors), 422, 'Content-Type' => 'text/error')
+      end
 
       helpers do
         def serialize(model, options = {})

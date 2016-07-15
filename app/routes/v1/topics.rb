@@ -2,18 +2,13 @@
 module Routes
   module V1
     class Topics < Grape::API
-      version 'v1', using: :accept_version_header, vendor: 'cabbit'
-      format :json
-      content_type :json, 'application/json;charset=UTF-8'
-
-      rescue_from ActiveRecord::RecordNotFound do
-        error!(serialize_errors([{detail: 'Forum not found.'}]), 404, 'Content-Type' => 'text/error')
-      end
-
-      helpers do
-      end
-
       resource :topics do
+        helpers do
+          def topic
+            @topic ||= Topic.find(params[:id])
+          end
+        end
+
         desc ''
         params do
           optional :forum_id, type: Integer, desc: 'Topics for a given forum_id'
@@ -31,26 +26,33 @@ module Routes
           end
         end
         post do
-          topic = Topic.create(permitted_params[:topic])
+          @topic = Topic.create!(permitted_params[:topic])
 
-          if topic.save
-            status 201
-            serialize(topic, is_collection: false)
-          else
-            serialize_errors(topic.errors)
-          end
+          status 201
+          serialize(topic, is_collection: false)
         end
 
         route_param :id do
           desc ''
           get do
-            topic = Topic.find(params[:id])
             serialize(topic, is_collection: false)
           end
 
           desc ''
-          get :forum do
-            topic = Topic.find(params[:id])
+          params do
+            requires :topic, type: Hash do
+              optional :title, type: String, desc: 'Title'
+            end
+          end
+          patch do
+            topic.update!(permitted_params[:topic])
+
+            status 202
+            serialize(topic, is_collection: false)
+          end
+
+          desc ''
+          get :forums do
             forum = Forum.find(topic.forum_id)
             serialize(forum, is_collection: false)
           end
