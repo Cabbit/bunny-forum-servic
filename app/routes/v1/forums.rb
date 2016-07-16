@@ -6,12 +6,15 @@ module Routes
         def forum
           @forum ||= Forum.find(params[:id])
         end
+
+        def forums
+          @forums ||= Forum.find_each
+        end
       end
 
       resource :forums do
         desc ''
         get do
-          forums = Forum.find_each
           stream serialize_as_stream(forums, {})
         end
 

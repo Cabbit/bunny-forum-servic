@@ -7,6 +7,14 @@ module Routes
           def topic
             @topic ||= Topic.find(params[:id])
           end
+
+          def topics
+            @topics ||= Topic.where(permitted_params).find_each
+          end
+
+          def forum
+            @forum ||= Forum.find(topic.forum_id)
+          end
         end
 
         desc ''
@@ -14,7 +22,6 @@ module Routes
           optional :forum_id, type: Integer, desc: 'Topics for a given forum_id'
         end
         get do
-          topics = Topic.where(permitted_params).find_each
           stream serialize_as_stream(topics, {})
         end
 
@@ -53,7 +60,6 @@ module Routes
 
           desc ''
           get :forums do
-            forum = Forum.find(topic.forum_id)
             serialize(forum, is_collection: false)
           end
         end

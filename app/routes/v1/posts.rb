@@ -6,12 +6,15 @@ module Routes
         def post
           @post ||= Post.find(params[:id])
         end
+
+        def posts
+          @posts ||= Post.find_each
+        end
       end
 
       resource :posts do
         desc ''
         get do
-          posts = Post.find_each
           stream serialize_as_stream(posts, {})
         end
 
