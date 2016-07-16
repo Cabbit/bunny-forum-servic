@@ -23,7 +23,7 @@ module Routes
           requires :forum, type: Hash do
             requires :title, type: String, desc: 'Title'
             requires :description, type: String, desc: 'Description'
-            optional :forum_id, type: Integer, desc: 'Parent id'
+            optional :category_id, type: Integer, desc: 'Parent id'
           end
         end
         post do
@@ -53,16 +53,6 @@ module Routes
 
             status 202
             serialize(forum, is_collection: false)
-          end
-
-          route_param :forums do
-            desc 'Sub forums'
-            get do
-              cache_control :public, max_age: 15
-
-              forums = Forum.where(forum_id: params[:id])
-              serialize(forums, is_collection: true)
-            end
           end
         end
       end

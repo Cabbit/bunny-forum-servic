@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716001501) do
+ActiveRecord::Schema.define(version: 20160716011411) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "title",      limit: 255, null: false
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20160716001501) do
   end
 
   create_table "forums", force: :cascade do |t|
-    t.integer  "forum_id",       limit: 4
     t.string   "title",          limit: 255,             null: false
     t.string   "description",    limit: 255,             null: false
     t.integer  "topics_count",   limit: 4,   default: 0, null: false
@@ -29,12 +28,14 @@ ActiveRecord::Schema.define(version: 20160716001501) do
     t.date     "last_posted_at"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.integer  "category_id",    limit: 4
   end
 
   create_table "posts", force: :cascade do |t|
     t.string   "title",      limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "topic_id",   limit: 4,   null: false
   end
 
   create_table "topics", force: :cascade do |t|

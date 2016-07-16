@@ -16,7 +16,7 @@ module Routes
       describe 'POST /posts' do
         context 'when attributes valid' do
           it 'should create post 1' do
-            post '/api/posts', post: { title: 'B' }
+            post '/api/posts', post: { title: 'B', topic_id: 1 }
 
             assert_equal 1, json_response.size
             assert_equal 201, status_code
@@ -36,7 +36,7 @@ module Routes
           end
 
           it 'should create post 1' do
-            post '/api/posts', post: { title: '' }
+            post '/api/posts', post: { title: '', topic_id: 1 }
 
             assert_equal error_message, json_response
             assert_equal 422, status_code

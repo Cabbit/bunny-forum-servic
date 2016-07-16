@@ -21,7 +21,8 @@ module Routes
         desc ''
         params do
           requires :post, type: Hash do
-            optional :title, type: String, desc: 'Title'
+            requires :topic_id, type: Integer, desc: 'Topic'
+            requires :title, type: String, desc: 'Title'
           end
         end
         post do
@@ -40,7 +41,8 @@ module Routes
           desc ''
           params do
             requires :post, type: Hash do
-              requires :title, type: String, desc: 'Title'
+              optional :title, type: String, desc: 'Title'
+              optional :topic_id, type: Integer, desc: 'Topic'
             end
           end
           patch do

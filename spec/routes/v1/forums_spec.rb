@@ -8,7 +8,7 @@ module Routes
         it 'should return 1 forum' do
           get '/api/forums'
 
-          assert_equal 2, json_response[:data].size
+          assert_equal 1, json_response[:data].size
           assert_equal 200, status_code
         end
       end
@@ -74,17 +74,6 @@ module Routes
 
             assert_equal 1, json_response.size
             assert_equal 202, status_code
-          end
-        end
-      end
-
-      describe 'GET /forums/:id/forums' do
-        context 'when attributes valid' do
-          it 'should get the sub forums' do
-            get '/api/forums/1/forums'
-
-            assert_equal 1, json_response.size
-            assert_equal 200, status_code
           end
         end
       end

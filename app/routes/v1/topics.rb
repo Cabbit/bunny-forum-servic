@@ -59,7 +59,7 @@ module Routes
           end
 
           desc ''
-          get :forums do
+          get :forum do
             serialize(forum, is_collection: false)
           end
         end
