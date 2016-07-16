@@ -16,5 +16,5 @@ end
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
-  t.test_files = FileList['test/**/*_spec.rb']
+  t.test_files = FileList['spec/**/*_spec.rb']
 end

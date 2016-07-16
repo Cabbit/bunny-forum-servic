@@ -23,7 +23,7 @@ ActiveRecord::Migration.verbose = false
 
 DatabaseCleaner.strategy = :transaction
 
-Dir.glob('./test/support/*.rb').each { |file| require file }
+Dir.glob('./spec/support/*.rb').each { |file| require file }
 
 require 'mocha/mini_test'
 require 'minitest-spec-context'

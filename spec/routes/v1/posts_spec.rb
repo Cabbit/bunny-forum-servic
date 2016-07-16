@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative '../../test_helper'
+require_relative '../../spec_helper'
 
 module Routes
   module V1

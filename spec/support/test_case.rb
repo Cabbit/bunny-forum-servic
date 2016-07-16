@@ -10,8 +10,8 @@ class TestCase < Minitest::Spec
     DatabaseCleaner.clean
   end
 
-  fixture_names = Dir.glob('./test/fixtures/*.yml').map { |path| File.basename(path).sub(/\.yml$/, '') }
-  fixtures = ActiveRecord::FixtureSet.create_fixtures('test/fixtures', fixture_names)
+  fixture_names = Dir.glob('./spec/fixtures/*.yml').map { |path| File.basename(path).sub(/\.yml$/, '') }
+  fixtures = ActiveRecord::FixtureSet.create_fixtures('spec/fixtures', fixture_names)
   fixtures.each do |fixture_set|
     define_method fixture_set.name do |record_name|
       id = fixture_set[record_name.to_s]['id']
