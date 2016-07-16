@@ -12,7 +12,7 @@ module Routes
       helpers ParamsHelper
 
       rescue_from ActiveRecord::RecordNotFound do |e|
-        error!(serialize_errors([{detail: e.message}]), 404, 'Content-Type' => 'text/error')
+        error!(serialize_errors([{ detail: e.message }]), 404, 'Content-Type' => 'text/error')
       end
 
       rescue_from ActiveRecord::RecordInvalid do |e|

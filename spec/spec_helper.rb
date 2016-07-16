@@ -15,6 +15,7 @@ ENV['RACK_ENV'] = 'test'
 $VERBOSE = nil
 require 'pry'
 require 'minitest/autorun'
+
 require_relative '../config/application'
 require 'active_record/fixtures'
 
