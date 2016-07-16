@@ -19,6 +19,10 @@ module Routes
         error!(serialize_errors(e.record.errors), 422, 'Content-Type' => 'text/error')
       end
 
+      rescue_from Grape::Exceptions::ValidationErrors do |e|
+        error!(serialize_errors(e), 400, 'Content-Type' => 'text/error')
+      end
+
       helpers do
         def serialize(model, options = {})
           JSONAPI::Serializer.serialize(model, options)

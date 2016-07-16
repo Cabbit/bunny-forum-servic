@@ -23,7 +23,28 @@ module Routes
           end
         end
 
-        context 'when attributes invalid' do
+        context 'when params invalid' do
+          let(:error_message) do
+            {
+              errors: [
+                {
+                  params: ['category'], messages: ['is missing']
+                }, {
+                  params: ['category[title]'], messages: ['is missing']
+                }
+              ]
+            }
+          end
+
+          it 'should return params missing error' do
+            post '/api/categories'
+
+            assert_equal error_message, json_response
+            assert_equal 400, status_code
+          end
+        end
+
+        context 'when model invalid' do
           let(:error_message) do
             {
               errors: [
