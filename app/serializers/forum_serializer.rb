@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class ForumSerializer
   include JSONAPI::Serializer
+  has_many :forums
 
   attribute :forum_id
   attribute :description

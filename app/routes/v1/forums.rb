@@ -8,7 +8,7 @@ module Routes
         end
 
         def forums
-          @forums ||= Forum.find_each
+          @forums ||= Forum.where(forum_id: nil).find_each
         end
       end
 
@@ -22,9 +22,10 @@ module Routes
         params do
           requires :forum, type: Hash do
             requires :description, type: String, desc: 'Description'
-            optional :category_id, type: Integer, desc: 'Parent id'
+            optional :forum_id, type: Integer, desc: 'Parent forum id'
           end
         end
+
         post do
           @forum = Forum.create!(permitted_params[:forum])
 
@@ -51,6 +52,13 @@ module Routes
 
             status 202
             serialize(forum, is_collection: false)
+          end
+
+          desc ''
+          get :forums do
+            @forums = Forum.where(forum_id: params[:id]).find_each
+
+            stream serialize_as_stream(forums, {})
           end
         end
       end

@@ -8,3 +8,13 @@ a:
   last_posted_at: 2016-02-05 00:00:00
   created_at: 2016-02-05 00:00:00
   updated_at: 2016-02-05 00:00:00
+b:
+  id: 2
+  forum_id: 1
+  description: Sub Forum description
+  topics_count: 1
+  posts_count: 1
+  last_poster_id: 1
+  last_posted_at: 2016-02-05 00:00:00
+  created_at: 2016-02-05 00:00:00
+  updated_at: 2016-02-05 00:00:00
