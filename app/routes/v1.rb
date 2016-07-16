@@ -51,6 +51,7 @@ module Routes
         I18n.locale = normalized_locale || default_locale
       end
 
+      mount Routes::V1::Categories
       mount Routes::V1::Forums
       mount Routes::V1::Topics
       mount Routes::V1::Posts
