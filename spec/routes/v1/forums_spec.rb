@@ -95,6 +95,17 @@ module Routes
           end
         end
       end
+
+      describe 'GET /forums/:id/forums' do
+        context 'when attributes valid' do
+          it 'should get the sub-forums for forum 1' do
+            get '/api/forums/1/forums'
+
+            assert_equal 1, json_response.size
+            assert_equal 200, status_code
+          end
+        end
+      end
     end
   end
 end
