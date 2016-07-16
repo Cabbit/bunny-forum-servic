@@ -21,7 +21,6 @@ module Routes
         desc ''
         params do
           requires :forum, type: Hash do
-            requires :title, type: String, desc: 'Title'
             requires :description, type: String, desc: 'Description'
             optional :category_id, type: Integer, desc: 'Parent id'
           end
@@ -44,7 +43,6 @@ module Routes
           desc ''
           params do
             requires :forum, type: Hash do
-              optional :title, type: String, desc: 'Title'
               optional :description, type: String, desc: 'Description'
             end
           end

@@ -1,7 +1,6 @@
 a:
   id: 1
-  category_id:
-  title: Forum A
+  forum_id:
   description: Forum A description
   topics_count: 1
   posts_count: 1

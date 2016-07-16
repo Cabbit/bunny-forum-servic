@@ -4,19 +4,18 @@ def generate_text(number)
 end
 
 10.times do
-  title = generate_text(rand(5..20))
+  description = generate_text(rand(5..20))
 
-  p "Create category #{title}"
-  Category.create! title: title
+  p "Create forum #{title}"
+  Forum.create! description: description
 end
 
-Category.find_each do |category|
-  rand(1..10).times do
-    title = generate_text(rand(5..20))
+Forum.find_each do |forum|
+  rand(0..10).times do
     description = generate_text(rand(5..20))
 
-    p "Create forum #{title} for category #{category.title}"
-    Forum.create! title: title, description: description, category_id: category.id
+    p "Create sub-forum #{title} for forum #{category.title}"
+    Forum.create! description: description, forum_id: forum.id
   end
 end
 

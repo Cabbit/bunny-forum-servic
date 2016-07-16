@@ -2,8 +2,7 @@
 class ForumSerializer
   include JSONAPI::Serializer
 
-  attribute :category_id
-  attribute :title
+  attribute :forum_id
   attribute :description
   attribute :topics_count
   attribute :posts_count
