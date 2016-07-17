@@ -83,6 +83,14 @@ module Routes
           assert_equal 200, status_code
         end
       end
+
+      describe 'PATCH /topics/:id/views' do
+        it 'should patch the topic views counter' do
+          patch '/api/topics/1/views'
+
+          assert_equal 202, status_code
+        end
+      end
     end
   end
 end

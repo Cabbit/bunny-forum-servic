@@ -62,6 +62,13 @@ module Routes
           get :forum do
             serialize(forum, is_collection: false)
           end
+
+          desc 'Updates the views counter'
+          patch :views do
+            topic.increment_views_counter!
+
+            status 202
+          end
         end
       end
     end
