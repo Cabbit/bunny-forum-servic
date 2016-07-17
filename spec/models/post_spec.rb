@@ -1,22 +1,23 @@
 # frozen_string_literal: true
 require_relative '../spec_helper'
 
-class PostsTest < TestCase
-  let(:post) { posts(:a) }
+class PostSpec < TestCase
+  let(:subject) { Post.find(1) }
+  let(:topic)   { Topic.find(1) }
 
-  describe '#title' do
-    context 'when empty' do
-      it 'should raise a validation error' do
-        post.title = ''
-        assert_raises(ActiveRecord::RecordInvalid) { post.save! }
-      end
+  describe '#after_create' do
+    it 'should update the topic replies counter by 1' do
+      Post.create!(title: 'A', topic_id: 1)
+
+      assert_equal 2, topic.replies_count
     end
+  end
 
-    context 'when provided' do
-      it 'should update the post title' do
-        post.title = 'Post B'
-        assert post.save
-      end
+  describe '#increment_topic_replies_count!' do
+    it 'should update the topic replies counter by 1' do
+      subject.increment_topic_replies_count!
+
+      assert_equal 2, topic.replies_count
     end
   end
 end
