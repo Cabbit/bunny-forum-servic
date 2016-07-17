@@ -28,7 +28,7 @@ class PostSpec < TestCase
     end
 
     it 'should update the forums\'s post counter by 1' do
-      subject.increment_forum_post_count!
+      subject.increment_topic_replies_count!
 
       assert_equal 2, forum.posts_count
     end
