@@ -3,20 +3,6 @@ module Routes
   module V1
     class Topics < Grape::API
       resource :topics do
-        helpers do
-          def topic
-            @topic ||= Topic.find(params[:id])
-          end
-
-          def topics
-            @topics ||= Topic.where(permitted_params).find_each
-          end
-
-          def forum
-            @forum ||= Forum.find(topic.forum_id)
-          end
-        end
-
         desc ''
         params do
           optional :forum_id, type: Integer, desc: 'Topics for a given forum_id'
@@ -56,11 +42,6 @@ module Routes
 
             status 202
             serialize(topic, is_collection: false)
-          end
-
-          desc ''
-          get :forum do
-            serialize(forum, is_collection: false)
           end
 
           desc 'Updates the views counter'

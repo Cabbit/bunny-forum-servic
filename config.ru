@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require './config/application'
 
-use ActiveRecord::ConnectionAdapters::ConnectionManagement
+use OTR::ActiveRecord::ConnectionManagement
 
 if ENV['RACK_ENV'] == 'development'
   $VERBOSE = nil

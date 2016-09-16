@@ -2,16 +2,6 @@
 module Routes
   module V1
     class Forums < Grape::API
-      helpers do
-        def forum
-          @forum ||= Forum.find(params[:id])
-        end
-
-        def forums
-          @forums ||= Forum.where(forum_id: nil).find_each
-        end
-      end
-
       resource :forums do
         desc ''
         get do

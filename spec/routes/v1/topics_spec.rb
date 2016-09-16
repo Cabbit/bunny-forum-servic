@@ -75,15 +75,6 @@ module Routes
         end
       end
 
-      describe 'GET /topics/:id/forum' do
-        it 'should get the forums for the topic' do
-          get '/api/topics/1/forum'
-
-          assert_equal 1, json_response.size
-          assert_equal 200, status_code
-        end
-      end
-
       describe 'PATCH /topics/:id/views' do
         it 'should patch the topic views counter' do
           patch '/api/topics/1/views'

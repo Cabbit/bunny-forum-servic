@@ -2,16 +2,6 @@
 module Routes
   module V1
     class Posts < Grape::API
-      helpers do
-        def post
-          @post ||= Post.find(params[:id])
-        end
-
-        def posts
-          @posts ||= Post.find_each
-        end
-      end
-
       resource :posts do
         desc ''
         get do
