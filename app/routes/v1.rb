@@ -7,7 +7,7 @@ module Routes
       version 'v1', using: :accept_version_header, vendor: 'cabbit'
       content_type :json, 'application/json;charset=UTF-8'
       format :json
-      prefix 'api'
+      prefix 'api/forum'
 
       helpers ApplicationHelper
       helpers ForumHelper

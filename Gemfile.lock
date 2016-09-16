@@ -119,7 +119,7 @@ GEM
       slop (~> 3.0)
     puma (3.6.0)
     puma (3.6.0-java)
-    rack (2.0.1)
+    rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-test (0.6.3)
@@ -157,7 +157,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord
+  activerecord (~> 4.2.7)
   aws-sdk (< 2.0)
   configatron
   database_cleaner
@@ -170,13 +170,13 @@ DEPENDENCIES
   minitest-spec-context
   mocha
   mysql2
-  otr-activerecord
+  otr-activerecord (~> 1.2.0)
   paperclip
   paperclip-rack
   pry
   pry-remote
   puma
-  rack
+  rack (~> 1.6.0)
   rack-test
   rake
   rubocop
